@@ -1,0 +1,15 @@
+tasks:
+  - name: Next.js Server 
+    init: 
+      npm install
+    command: npm run dev
+
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true
+    pullRequestsFromForks: true
+    addCheck: true
+    addComment: false
+    addBadge: true
