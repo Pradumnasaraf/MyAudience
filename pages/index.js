@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import html2canvas from 'html2canvas';
 
 export default function Home() {
   const [platformFollowers, setPlatformFollowers] = useState({
@@ -32,6 +33,22 @@ export default function Home() {
 
   const totalFollowers = Object.values(platformFollowers).reduce((acc, count) => acc + count, 0);
 
+  const downloadSnapshot = () => {
+    html2canvas(document.body, {
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      scale: 2,
+      logging: true,
+      scrollX: 0,
+      scrollY: -window.scrollY,
+    }).then(canvas => {
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = 'audience.png';
+      link.click();
+    });
+  };
+
   return (
     <>
       <Head>
@@ -40,7 +57,7 @@ export default function Home() {
       </Head>
       <div className="container">
         <h1>Audience Calculator</h1>
-        
+
         <div className="tiles-container">
           {platforms.map(platform => (
             <div key={platform.name} className={`tile ${platform.className}`}>
@@ -63,6 +80,10 @@ export default function Home() {
             {formatNumber(totalFollowers)}
           </div>
         </div>
+
+        <button className="download-button" onClick={downloadSnapshot}>
+          <i className="fas fa-download"></i>
+        </button>
       </div>
     </>
   );
