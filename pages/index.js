@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Head from 'next/head';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export default function Home() {
@@ -12,12 +13,12 @@ export default function Home() {
   });
 
   const platforms = [
-    { name: 'YouTube', icon: 'fab fa-youtube' },
-    { name: 'GitHub', icon: 'fab fa-github' },
-    { name: 'Twitter', icon: 'fab fa-twitter' },
-    { name: 'LinkedIn', icon: 'fab fa-linkedin' },
-    { name: 'Dev.to', icon: 'fab fa-dev' },
-    { name: 'Hashnode', icon: 'fas fa-pencil-alt' } // Pencil icon for Hashnode
+    { name: 'YouTube', icon: 'fab fa-youtube', className: 'youtube' },
+    { name: 'GitHub', icon: 'fab fa-github', className: 'github' },
+    { name: 'Twitter', icon: 'fab fa-twitter', className: 'twitter' },
+    { name: 'LinkedIn', icon: 'fab fa-linkedin', className: 'linkedin' },
+    { name: 'Dev.to', icon: 'fab fa-dev', className: 'devto' },
+    { name: 'Hashnode', icon: 'fas fa-pencil-alt', className: 'hashnode' }
   ];
 
   const handleInputChange = (platform, value) => {
@@ -32,31 +33,37 @@ export default function Home() {
   const totalFollowers = Object.values(platformFollowers).reduce((acc, count) => acc + count, 0);
 
   return (
-    <div className="container">
-      <h1>Audience Calculator</h1>
-      
-      <div className="tiles-container">
-        {platforms.map(platform => (
-          <div key={platform.name} className="tile">
-            <i className={`${platform.icon} tile-icon`} />
-            <div className="tile-label">{platform.name}</div>
-            <input
-              type="number"
-              value={platformFollowers[platform.name] || ''}
-              onChange={e => handleInputChange(platform.name, parseInt(e.target.value) || 0)}
-              className="tile-input"
-              placeholder="0"
-            />
-          </div>
-        ))}
-      </div>
+    <>
+      <Head>
+        <title>Audience Calculator</title>
+        <meta name="description" content="Track and calculate your total social media audience." />
+      </Head>
+      <div className="container">
+        <h1>Audience Calculator</h1>
+        
+        <div className="tiles-container">
+          {platforms.map(platform => (
+            <div key={platform.name} className={`tile ${platform.className}`}>
+              <i className={`${platform.icon} tile-icon`} />
+              <div className="tile-label">{platform.name}</div>
+              <input
+                type="number"
+                value={platformFollowers[platform.name] || ''}
+                onChange={e => handleInputChange(platform.name, parseInt(e.target.value) || 0)}
+                className="tile-input"
+                placeholder="0"
+              />
+            </div>
+          ))}
+        </div>
 
-      <div className="total-audience">
-        <h2>Total Audience Count</h2>
-        <div className="total-count">
-          {formatNumber(totalFollowers)}
+        <div className="total-audience">
+          <h2>Total Audience Count</h2>
+          <div className="total-count">
+            {formatNumber(totalFollowers)}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

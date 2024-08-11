@@ -33,13 +33,7 @@ body {
   align-items: center;
   margin: 0;
   padding: 0;
-}
-
-/* Custom utilities */
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Container styling */
@@ -47,9 +41,9 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  background-color: white;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,7 +54,8 @@ h1 {
   text-align: center;
   margin-bottom: 40px;
   color: #333;
-  font-size: 2em;
+  font-size: 2.5em;
+  font-weight: bold;
 }
 
 /* Tile container styling */
@@ -74,9 +69,8 @@ h1 {
 
 /* Individual tile styling */
 .tile {
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Increased shadow intensity */
   padding: 30px;
   text-align: center;
   width: 250px;
@@ -88,19 +82,34 @@ h1 {
   font-size: 18px;
   position: relative;
   overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: #fff; /* Default background color */
+}
+
+/* Tile hover effect */
+.tile:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); /* Increased shadow on hover */
 }
 
 /* Tile icon styling */
 .tile-icon {
-  font-size: 50px;
+  font-size: 60px;
   margin-bottom: 15px;
+  color: #333; /* Default icon color */
 }
+
+/* Icon colors */
+.tile.youtube .tile-icon { color: #FF0000; } /* YouTube */
+.tile.github .tile-icon { color: #181717; } /* GitHub */
+.tile.twitter .tile-icon { color: #1DA1F2; } /* Twitter */
+.tile.linkedin .tile-icon { color: #0077B5; } /* LinkedIn */
+.tile.devto .tile-icon { color: #0C0D0E; } /* Dev.to */
+.tile.hashnode .tile-icon { color: #00C4CC; } /* Hashnode */
 
 /* Tile label styling */
 .tile-label {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: bold;
-  color: #333;
   margin-bottom: 10px;
 }
 
@@ -110,15 +119,20 @@ h1 {
   background: transparent;
   border: none;
   text-align: center;
-  font-size: 22px;
-  color: #0070f3;
+  font-size: 24px;
+  color: #333; /* Text color */
   outline: none;
-  border-bottom: 2px solid #0070f3;
+  border-bottom: 2px solid #333;
   padding: 5px;
+  box-sizing: border-box;
+  appearance: textfield; /* Remove spinner in some browsers */
 }
 
-.tile-input:focus {
-  border-bottom: 2px solid #0056b3;
+/* Remove spinner in WebKit browsers (Chrome, Safari) */
+.tile-input::-webkit-inner-spin-button,
+.tile-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Total audience section styling */
@@ -128,7 +142,7 @@ h1 {
 }
 
 .total-count {
-  font-size: 2.5em;
+  font-size: 3em;
   font-weight: bold;
   color: #0070f3;
 }
