@@ -11,18 +11,14 @@ const isLocalStorageAvailable = () => {
 };
 
 export const formatNumber = (num) => {
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + 'M';
-  }
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1) + 'K';
-  }
+  if (!num) return '0';
+  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+  if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
   return num.toString();
 };
 
-export const calculateTotalFollowers = (followers) => {
-  return Object.values(followers).reduce((acc, count) => acc + count, 0);
-};
+export const calculateTotalFollowers = (followers) => 
+  Object.values(followers).reduce((acc, count) => acc + (count || 0), 0);
 
 export const loadFromLocalStorage = (key, defaultValue = null) => {
   if (!isLocalStorageAvailable()) {
@@ -32,44 +28,32 @@ export const loadFromLocalStorage = (key, defaultValue = null) => {
 
   try {
     const item = localStorage.getItem(key);
-    if (!item) return defaultValue;
-
-    const parsedItem = JSON.parse(item);
-    return parsedItem || defaultValue;
-  } catch (error) {
-    console.error(`Error loading ${key} from localStorage:`, error);
+    return item ? JSON.parse(item) : defaultValue;
+  } catch {
     return defaultValue;
   }
 };
 
 export const saveToLocalStorage = (key, value) => {
-  if (!isLocalStorageAvailable()) {
-    console.warn('localStorage is not available');
-    return;
-  }
-
+  if (!isLocalStorageAvailable()) return;
   try {
-    const serializedValue = JSON.stringify(value);
-    localStorage.setItem(key, serializedValue);
+    localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
     console.error(`Error saving ${key} to localStorage:`, error);
-    throw error;
   }
 };
 
 export const downloadImage = async (elementId, format = 'png') => {
-  const element = document.getElementById(elementId);
-  if (!element) {
-    throw new Error('Element not found');
-  }
-  
   try {
+    const element = document.getElementById(elementId);
+    if (!element) throw new Error('Element not found');
+    
     const html2canvas = (await import('html2canvas')).default;
     const canvas = await html2canvas(element);
-    const dataUrl = canvas.toDataURL(`image/${format}`);
+    
     const link = document.createElement('a');
     link.download = `audience-stats.${format}`;
-    link.href = dataUrl;
+    link.href = canvas.toDataURL(`image/${format}`);
     link.click();
   } catch (error) {
     console.error('Error generating image:', error);

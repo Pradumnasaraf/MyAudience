@@ -1,6 +1,11 @@
 import { formatNumber } from '../utils/helpers';
 
-export default function PlatformTile({ platform, followers, onChange }) {
+export default function PlatformTile({ platform, followers = 0, onChange }) {
+  const handleChange = (e) => {
+    const value = parseInt(e.target.value) || 0;
+    if (value >= 0) onChange(platform.name, value);
+  };
+
   return (
     <div className={`tile ${platform.className}`}>
       <div className="tile-icon" style={{ color: platform.color }}>
@@ -10,7 +15,7 @@ export default function PlatformTile({ platform, followers, onChange }) {
       <input
         type="number"
         value={followers || ''}
-        onChange={(e) => onChange(platform.name, parseInt(e.target.value) || 0)}
+        onChange={handleChange}
         className="tile-input"
         placeholder="0"
         aria-label={`${platform.name} followers count`}

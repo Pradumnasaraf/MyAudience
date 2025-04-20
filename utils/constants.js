@@ -9,16 +9,9 @@ export const PLATFORMS = [
   { name: 'Threads', icon: 'fa-brands fa-threads', className: 'threads', color: '#000000' }
 ];
 
-export const INITIAL_FOLLOWERS = {
-  YouTube: 0,
-  GitHub: 0,
-  Twitter: 0,
-  LinkedIn: 0,
-  'Dev.to': 0,
-  Hashnode: 0,
-  Bluesky: 0,
-  Threads: 0
-};
+export const INITIAL_FOLLOWERS = Object.fromEntries(
+  PLATFORMS.map(p => [p.name, 0])
+);
 
 export const STORAGE_KEYS = {
   FOLLOWERS: 'platformFollowers',
