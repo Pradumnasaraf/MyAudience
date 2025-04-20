@@ -1,6 +1,6 @@
 # Audience Calculator
 
-A modern web application to track and visualize your total social media audience across multiple platforms. Built with Next.js, React, and TailwindCSS.
+A web application to track and visualize your total social media audience across multiple platforms. Built with Next.js, React, and TailwindCSS.
 
 ![Audience Calculator Screenshot](public/screenshot.png)
 
