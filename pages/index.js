@@ -37,9 +37,20 @@ export default function Home() {
 
   useEffect(() => {
     try {
-      setPlatformFollowers(loadFromLocalStorage(STORAGE_KEYS.FOLLOWERS, INITIAL_FOLLOWERS));
-      setHistory(loadFromLocalStorage(STORAGE_KEYS.HISTORY, []));
-      setLastUpdated(loadFromLocalStorage(STORAGE_KEYS.LAST_UPDATED, null));
+      const savedFollowers = loadFromLocalStorage(STORAGE_KEYS.FOLLOWERS);
+      const savedHistory = loadFromLocalStorage(STORAGE_KEYS.HISTORY);
+      const savedLastUpdated = loadFromLocalStorage(STORAGE_KEYS.LAST_UPDATED);
+
+      // Only update state if we have saved data
+      if (savedFollowers && Object.keys(savedFollowers).length > 0) {
+        setPlatformFollowers(savedFollowers);
+      }
+      if (savedHistory && savedHistory.length > 0) {
+        setHistory(savedHistory);
+      }
+      if (savedLastUpdated) {
+        setLastUpdated(savedLastUpdated);
+      }
     } catch (err) {
       setError('Failed to load saved data');
       console.error('Error loading data:', err);
@@ -49,6 +60,11 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    // Don't save if we're using the initial state
+    if (platformFollowers === INITIAL_FOLLOWERS) {
+      return;
+    }
+
     try {
       const now = new Date().toISOString();
       saveToLocalStorage(STORAGE_KEYS.FOLLOWERS, platformFollowers);
@@ -69,7 +85,7 @@ export default function Home() {
       setError('Failed to save data');
       console.error('Error saving data:', err);
     }
-  }, [platformFollowers]);
+  }, [platformFollowers, history]);
 
   const handleInputChange = (platform, value) => {
     if (value < 0) return;
