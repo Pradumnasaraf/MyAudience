@@ -3,171 +3,485 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Root variables for color schemes */
+/* Importing fonts */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+/* Global styles */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --primary: #3B82F6;
+  --background: #F0F4F8;
+  --card-bg: #FFFFFF;
+  --text: #1E293B;
+  --text-secondary: #64748B;
+  --border: #E2E8F0;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --gradient-start: #3B82F6;
+  --gradient-end: #60A5FA;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-/* Importing a new font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-
-/* Global body styles */
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif; /* Updated font family */
+  box-sizing: border-box;
+  transition: all 0.2s ease;
 }
 
-/* Container styling */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  border-radius: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Heading styling */
-h1 {
-  text-align: center;
-  margin-bottom: 40px;
-  color: #333;
-  font-size: 2.5em;
-  font-weight: 400; /* Less bold */
-}
-
-/* Tile container styling */
-.tiles-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
   width: 100%;
 }
 
-/* Individual tile styling */
-.tile {
-  border-radius: 16px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Increased shadow intensity */
-  padding: 30px;
-  text-align: center;
-  width: 250px;
-  height: 250px;
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--background);
+  color: var(--text);
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* App container */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: 18px;
+  padding: 20px;
+  background: var(--background);
+  background-image: 
+    radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(96, 165, 250, 0.1) 0px, transparent 50%);
+}
+
+/* Main container */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  padding: 32px;
+  background: var(--card-bg);
+  border-radius: 32px;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Heading styles */
+h1 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+/* Last updated */
+.last-updated {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-align: center;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-top: -16px;
+}
+
+/* Tiles container */
+.tiles-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+/* Tile styles */
+.tile {
+  background: var(--card-bg);
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
-  background-color: #fff; /* Default background color */
 }
 
-/* Tile hover effect */
+.tile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
 .tile:hover {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); /* Increased shadow on hover */
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover);
 }
 
-/* Tile icon styling */
+.tile:hover::before {
+  opacity: 1;
+}
+
+/* Tile icon styles */
 .tile-icon {
-  font-size: 60px;
-  margin-bottom: 15px;
-  color: #333; /* Default icon color */
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: rgba(59, 130, 246, 0.1);
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-/* Icon colors */
-.tile.youtube .tile-icon { color: #FF0000; } /* YouTube */
-.tile.github .tile-icon { color: #181717; } /* GitHub */
-.tile.twitter .tile-icon { color: #1DA1F2; } /* Twitter */
-.tile.linkedin .tile-icon { color: #0077B5; } /* LinkedIn */
-.tile.devto .tile-icon { color: #0C0D0E; } /* Dev.to */
-.tile.hashnode .tile-icon { color: #00C4CC; } /* Hashnode */
-
-/* Tile label styling */
-.tile-label {
+.tile-icon i {
   font-size: 24px;
-  font-weight: 400; /* Less bold */
-  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
 }
 
-/* Editable input inside tile */
+.tile-icon svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.tile:hover .tile-icon {
+  transform: scale(1.1);
+}
+
+/* Platform-specific icon styles */
+.hashnode .tile-icon {
+  background: rgba(41, 98, 255, 0.1);
+}
+
+.bluesky .tile-icon {
+  background: rgba(0, 133, 255, 0.1);
+}
+
+/* Platform-specific icon adjustments */
+.youtube .tile-icon {
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.github .tile-icon {
+  background: rgba(24, 23, 23, 0.1);
+}
+
+.twitter .tile-icon {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.linkedin .tile-icon {
+  background: rgba(0, 119, 181, 0.1);
+}
+
+.devto .tile-icon {
+  background: rgba(12, 13, 14, 0.1);
+}
+
+.threads .tile-icon {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.tile-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
 .tile-input {
   width: 100%;
   background: transparent;
   border: none;
+  border-bottom: 2px solid var(--border);
+  padding: 8px;
+  font-size: 1.25rem;
   text-align: center;
-  font-size: 24px;
-  color: #333; /* Text color */
+  color: var(--text);
   outline: none;
-  border-bottom: 2px solid #333;
-  padding: 5px;
-  box-sizing: border-box;
-  appearance: textfield; /* Remove spinner in some browsers */
+  transition: all 0.3s ease;
+  font-weight: 600;
 }
 
-/* Remove spinner in WebKit browsers (Chrome, Safari) */
+.tile-input:focus {
+  border-color: var(--primary);
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 8px 8px 0 0;
+}
+
 .tile-input::-webkit-inner-spin-button,
 .tile-input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Total audience section styling */
+.follower-count {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+/* Total audience section */
 .total-audience {
-  margin-top: 50px;
   text-align: center;
+  padding: 40px;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  border-radius: 28px;
+  color: white;
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.2), 0 10px 10px -5px rgba(59, 130, 246, 0.1);
+}
+
+.total-audience::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  opacity: 0.6;
+}
+
+.total-audience h2 {
+  color: white;
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+  position: relative;
 }
 
 .total-count {
-  font-size: 3em;
-  font-weight: 400; /* Less bold */
-  color: #0070f3;
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  position: relative;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Download button styling */
-.download-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
-  background-color: #0070f3;
-  color: white;
+/* Chart container */
+.chart-container {
+  width: 100%;
+  max-width: 900px;
+  padding: 32px;
+  background: var(--card-bg);
+  border-radius: 28px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border);
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  width: 100%;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.download-options {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.format-select {
+  padding: 12px 20px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  outline: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.format-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.action-button {
+  padding: 12px 24px;
+  border-radius: 16px;
   border: none;
-  border-radius: 50%; /* Round button */
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 24px;
+  gap: 8px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
 }
 
-.download-button:hover {
-  background-color: #005bb5;
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px -1px rgba(59, 130, 246, 0.3);
+}
+
+.action-button i {
+  font-size: 1rem;
+}
+
+.clear-button {
+  background: #EF4444;
+  box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2);
+}
+
+.clear-button:hover {
+  background: #DC2626;
+  box-shadow: 0 8px 12px -1px rgba(239, 68, 68, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 24px;
+    border-radius: 24px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .total-count {
+    font-size: 2.75rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .download-options {
+    flex-direction: column;
+  }
+
+  .format-select {
+    width: 100%;
+  }
+
+  .action-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tile {
+    padding: 20px;
+  }
+
+  .tiles-container {
+    gap: 16px;
+  }
+}
+
+/* Error message */
+.error-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #FEE2E2;
+  border: 1px solid #EF4444;
+  color: #B91C1C;
+  padding: 12px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.error-close {
+  background: none;
+  border: none;
+  color: #B91C1C;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.error-close:hover {
+  background: rgba(185, 28, 28, 0.1);
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--primary);
+  font-size: 1.5rem;
+  padding: 40px;
+}
+
+.loading-spinner i {
+  font-size: 2.5rem;
+}
+
+.loading-spinner span {
+  font-weight: 500;
+  color: var(--text);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
