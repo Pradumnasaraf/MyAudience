@@ -2,16 +2,7 @@
 
 A web application to track and visualize your total social media audience across multiple platforms. Built with Next.js, React, and TailwindCSS.
 
-![Audience Calculator Screenshot](public/screenshot.png)
-
-## Features
-
-- 📊 Track followers across 8 major platforms
-- 📈 Visualize growth over time
-- 💾 Automatic local storage backup
-- 📱 Fully responsive design
-- 🖼️ Export statistics as PNG/JPG
-- 🎨 Modern, clean UI with dark mode support
+<img width="1512" height="949" alt="Screenshot 2025-12-31 at 11 02 28 AM" src="https://github.com/user-attachments/assets/b368119b-6402-453a-8535-d364b5d653c5" />
 
 ## Supported Platforms
 
@@ -23,8 +14,6 @@ A web application to track and visualize your total social media audience across
 - Hashnode
 - Bluesky
 - Threads
-
-## Getting Started
 
 ### Prerequisites
 
