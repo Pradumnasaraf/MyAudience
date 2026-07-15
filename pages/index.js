@@ -43,6 +43,7 @@ export default function Home() {
 
       // Only update state if we have saved data
       if (savedFollowers && Object.keys(savedFollowers).length > 0) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage on mount
         setPlatformFollowers(savedFollowers);
       }
       if (savedHistory && savedHistory.length > 0) {
@@ -69,6 +70,7 @@ export default function Home() {
       const now = new Date().toISOString();
       saveToLocalStorage(STORAGE_KEYS.FOLLOWERS, platformFollowers);
       saveToLocalStorage(STORAGE_KEYS.LAST_UPDATED, now);
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing derived timestamp after persisting to localStorage
       setLastUpdated(now);
       
       // Update history monthly
