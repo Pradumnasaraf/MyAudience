@@ -10,3 +10,10 @@ updates:
     commit-message:
       prefix: 'chore'
       include: 'scope'
+    # Hold ESLint on v9. eslint-config-next 16's bundled plugins
+    # (eslint-plugin-react, etc.) do not support ESLint v10 yet and crash
+    # with "scopeManager.addGlobals is not a function". Remove this ignore
+    # once eslint-config-next ships ESLint v10 support.
+    ignore:
+      - dependency-name: 'eslint'
+        update-types: ['version-update:semver-major']
